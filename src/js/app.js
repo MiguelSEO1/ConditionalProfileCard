@@ -1,8 +1,8 @@
 import "../style/index.css";
 
 /**
- *  EDIT ONLY INSIDE THIS RENDER FUNCTION
- *  This function is called every time the user changes types or changes any input
+ *  EDITAR SOLO DENTRO DE ESTA FUNCIÓN RENDER
+ *  Esta función se llama cada vez que el usuario cambia tipos o cambia cualquier entrada
  * 
     {
         includeCover: true, // if includeCover is true the algorithm should
@@ -24,30 +24,45 @@ import "../style/index.css";
  */
 function render(variables = {}) {
   console.log("These are the current variables: ", variables); //print on the console
-  // here we ask the logical questions to make decisions on how to build the html
-  // if includeCover==false then we reset the cover code without the <img> tag to make the cover transparent.
+  // aquí hacemos las preguntas lógicas para tomar decisiones sobre cómo construir el html
+  // if includeCover==false luego restablecemos el código de la portada sin la etiqueta <img> para que la portada sea transparente.
   let cover = `<div class="cover"><img src="${variables.background}" /></div>`;
   if (variables.includeCover == false) cover = "<div class='cover'></div>";
-
-  // reset the website body with the new html output
+  // restablecer el cuerpo del sitio web con la nueva salida html
   document.querySelector("#widget_content").innerHTML = `<div class="widget">
-            ${cover}
+  ${
+    variables.includeCover
+      ? `<div class="cover"><img src="${variables.background}" /></div>`
+      : "<div class='cover'></div>"
+  }
           <img src="${variables.avatarURL}" class="photo" />
-          <h1>Lucy Boilett</h1>
-          <h2>Web Developer</h2>
-          <h3>Miami, USA</h3>
-          <ul class="position-right">
-            <li><a href="https://twitter.com/4geeksacademy"><i class="fab fa-twitter"></i></a></li>
-            <li><a href="https://github.com/4geeksacademy"><i class="fab fa-github"></i></a></li>
-            <li><a href="https://linkedin.com/4geeksacademy"><i class="fab fa-linkedin"></i></a></li>
-            <li><a href="https://instagram.com/4geeksacademy"><i class="fab fa-instagram"></i></a></li>
+          <h1>${variables.name ? variables.name : "Nombre"} ${
+    variables.lastname ? variables.lastname : "Apellido"
+  } </h1>
+          <h2>${variables.role ? variables.role : "Rol"}</h2>
+          <h3>${variables.city ? variables.city : "Ciudad"}, ${
+    variables.country ? variables.country : "País"
+  }</h3>
+          <ul class=${variables.socialMediaPosition}>
+            <li><a href=${
+              variables.twitter
+            }><i class="fab fa-twitter"></i></a></li>
+            <li><a href=${
+              variables.github
+            }><i class="fab fa-github"></i></a></li>
+            <li><a href=${
+              variables.github
+            }><i class="fab fa-linkedin"></i></a></li>
+            <li><a href=${
+              variables.instagram
+            }><i class="fab fa-instagram"></i></a></li>
           </ul>
         </div>
     `;
 }
 
 /**
- * Don't change any of the lines below, here is where we do the logic for the dropdowns
+ * No cambie ninguna de las líneas a continuación, aquí es donde hacemos la lógica para los menús desplegables
  */
 window.onload = function() {
   window.variables = {
@@ -70,12 +85,14 @@ window.onload = function() {
     country: null,
     city: null
   };
-  render(window.variables); //render the card for the first time
+  render(window.variables); //renderizar la tarjeta por primera vez
+
+  //Esto no se Toca .....
 
   document.querySelectorAll(".picker").forEach(function(elm) {
     elm.addEventListener("change", function(e) {
-      // <- add a listener to every input
-      const attribute = e.target.getAttribute("for"); // when any input changes, collect the value
+      // <- agregar un oyente a cada entrada
+      const attribute = e.target.getAttribute("for"); // cuando cualquier entrada cambia, recopile el valor
       let values = {};
       values[attribute] =
         this.value == "" || this.value == "null"
@@ -85,7 +102,7 @@ window.onload = function() {
           : this.value == "false"
           ? false
           : this.value;
-      render(Object.assign(window.variables, values)); // render again the card with new valus
+      render(Object.assign(window.variables, values)); // renderizar de nuevo la tarjeta con un nuevo valor
     });
   });
 };

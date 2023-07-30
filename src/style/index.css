@@ -1,5 +1,5 @@
 .filters {
-  background: white;
+  background: rgb(207, 63, 63);
   width: 100%;
 }
 .filters li {
@@ -26,6 +26,7 @@
   background: #fff;
   border-radius: 5px;
   box-shadow: 0 5px 25px rgba(0, 0, 0, 0.1);
+  border: 2px solid #0b0b0b;
 }
 .widget .cover {
   height: 160px;
@@ -99,4 +100,20 @@
 .widget ul li:last-child > a {
   border: none;
   border-radius: 0 0 3px 0;
+}
+
+@media screen and (min-width: 1200px) {
+  .filters {
+    display: flex;
+    justify-content: center;
+    padding: 10px;
+  }
+
+  li {
+    margin-right: 10px;
+  }
+
+  .widget ul li a {
+    padding-right: none;
+  }
 }
